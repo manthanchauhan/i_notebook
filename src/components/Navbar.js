@@ -4,10 +4,6 @@ import { NavLink, useLocation } from 'react-router-dom'
 const Navbar = () => {
   let  location = useLocation();
 
-  useEffect(()=>{
-    console.log(location)
-  }, [location]);
-
   return (
     <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div className="container-fluid">
