@@ -84,7 +84,6 @@ const NoteState = (props) => {
     );
 
     const noteList = responseBody !== null ? responseBody.noteList : [];
-    console.log(noteList)
     setNotes(noteList);
   };
 
