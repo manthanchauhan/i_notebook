@@ -3,7 +3,7 @@ import NoteContext from "../contexts/notes/NoteContext";
 
 const NoteItem = (props) => {
   const context = useContext(NoteContext);
-  const {deleteNote, editNote} = context;
+  const {deleteNote} = context;
 
   const { note } = props;
   return (
@@ -13,7 +13,7 @@ const NoteItem = (props) => {
           <div className="d-flex mb-3">
             <h5 className="card-title me-auto p-2" style={{ height: "75px", overflow: "hidden" }}>{note.title}</h5>
             <i className="fa-regular fa-trash-can mx-2" onClick={()=>{deleteNote(note.id)}}></i>
-            <i className="fa-regular fa-pen-to-square mx-2" onClick={()=>{editNote(note.id, note.title, note.description)}}></i>
+            <i className="fa-regular fa-pen-to-square mx-2" onClick={()=>{props.updateNote(note)}}></i>
           </div>
           <p className="card-text" style={{ height: "75px", overflow: "hidden", marginBottom: "8px" }}>{note.description}</p>
         </div>

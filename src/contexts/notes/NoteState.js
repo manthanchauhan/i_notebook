@@ -4,7 +4,7 @@ import NoteContext from "./NoteContext";
 const NoteState = (props) => {
   const host = "http://localhost:8081";
   const authToken =
-    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW50aGFuY2hhdWhhbjk2MEBnbWFpbC5jb20iLCJleHAiOjE2ODUxMjUzNTgsImlhdCI6MTY4NTEwNzM1OH0.HDT6rZj0vV5yiMHNqYYD_0B9alr6knBwCiIkvPc6HrRTWYmXVafldpPMO8uhfnQSuADTiUtH9HEk-y66ZljMQQ";
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW50aGFuY2hhdWhhbjk2MEBnbWFpbC5jb20iLCJleHAiOjE2ODUyMDM1MTEsImlhdCI6MTY4NTE4NTUxMX0.KIED4o4m6G9q_RkSJoot0AfMeLPt5G_aXUnJBWqPxYdW0nDWaV6tgMihiCW95QpIsEoJveeJHCwlpvACmTiWgA";
 
   let notesInitial = [];
 
@@ -16,14 +16,16 @@ const NoteState = (props) => {
       description,
     });
 
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
-
-      if (element.id === id) {
-        element.title = title;
-        element.description = description;
+    let newNotes = JSON.parse(JSON.stringify(notes));
+    for (let index = 0; index < newNotes.length; index++) {
+      if (newNotes[index].id === id) {
+        newNotes[index].title = title;
+        newNotes[index].description = description;
+        break;
       }
     }
+
+    setNotes(newNotes);
   };
 
   const callApi = async (method, url, data) => {
