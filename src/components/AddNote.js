@@ -11,6 +11,7 @@ const AddNote = () => {
     const handleClick = (e)=>{
         e.preventDefault();
         addNote(note.title, note.description);
+        setNote(emptyNote);
     }
 
     const onChange = (e)=>{
@@ -31,6 +32,7 @@ const AddNote = () => {
             id="title"
             name="title"
             onChange={onChange}
+            value={note.title}
           />
         </div>
         <div className="mb-3">
@@ -43,6 +45,7 @@ const AddNote = () => {
             id="description"
             name="description"
             onChange={onChange}
+            value={note.description}
           />
         </div>
         
