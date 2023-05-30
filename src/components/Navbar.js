@@ -1,8 +1,15 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
+
+  const navigate = useNavigate();
+
+  const onLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate("/login");
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -52,8 +59,19 @@ const Navbar = () => {
               placeholder="Search"
               aria-label="Search"
             />
-            <Link to="/login" className="btn btn-primary mx-1" role="button">Login</Link>
-            <Link to="/signup" className="btn btn-primary mx-1" role="button">Signup</Link>
+            {localStorage.getItem("authToken") == null && (
+              <Link to="/login" className="btn btn-primary mx-1" role="button">
+                Login
+              </Link>
+            )}
+            {localStorage.getItem("authToken") == null && (
+              <Link to="/signup" className="btn btn-primary mx-1" role="button">
+                Signup
+              </Link>
+            )}
+            {localStorage.getItem("authToken") != null && (
+              <button className="btn btn-danger mx-1" onClick={onLogout}>Logout</button>
+            )}
           </form>
         </div>
       </div>

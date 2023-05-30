@@ -4,24 +4,24 @@ import NoteContext from "../contexts/notes/NoteContext";
 
 const Login = () => {
   const context = useContext(NoteContext);
-  const {callApi} = context;
+  const { callApi } = context;
 
   const navigate = useNavigate();
 
-  const [creds, setCreds] = useState({email: "", password: ""});
+  const [creds, setCreds] = useState({ email: "", password: "" });
 
-  const onChange = (e) =>{
-    setCreds({...creds, [e.target.id]: e.target.value});
-}
+  const onChange = (e) => {
+    setCreds({ ...creds, [e.target.id]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const responseJson = await callApi("POST", "/api/v1/auth/login", creds);
 
-    if (responseJson !== null){
-        const authToken = responseJson.authToken;
-        localStorage.setItem('authToken', authToken);
-        navigate("/");
+    if (responseJson !== null) {
+      const authToken = responseJson.authToken;
+      localStorage.setItem("authToken", authToken);
+      navigate("/");
     }
   };
 
@@ -48,8 +48,13 @@ const Login = () => {
           <label htmlFor="password" className="form-label">
             Password
           </label>
-          <input type="password" className="form-control" id="password" onChange={onChange} 
-          value={creds.password}/>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            onChange={onChange}
+            value={creds.password}
+          />
         </div>
         <button type="submit" className="btn btn-primary">
           Submit

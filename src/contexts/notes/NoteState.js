@@ -46,7 +46,6 @@ const NoteState = (props) => {
     if (response.status >= 200 && response.status <= 300){
       return responseBody;
     } else {
-      console.alert("Error, check console");
       console.log(responseBody);
       return null;
     }
