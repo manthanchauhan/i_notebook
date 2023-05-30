@@ -1,17 +1,15 @@
-import { useState } from "react";
+import {useState } from "react";
 import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
   const host = "http://localhost:8081";
-  const authToken =
-    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW50aGFuY2hhdWhhbjk2MEBnbWFpbC5jb20iLCJleHAiOjE2ODUyMDM1MTEsImlhdCI6MTY4NTE4NTUxMX0.KIED4o4m6G9q_RkSJoot0AfMeLPt5G_aXUnJBWqPxYdW0nDWaV6tgMihiCW95QpIsEoJveeJHCwlpvACmTiWgA";
 
   let notesInitial = [];
 
   const [notes, setNotes] = useState(notesInitial);
 
   const editNote = async (id, title, description) => {
-    await callApi("PATCH", `${host}/api/v1/notes/${id}`, {
+    await callApi("PATCH", `/api/v1/notes/${id}`, {
       title,
       description,
     });
@@ -33,7 +31,7 @@ const NoteState = (props) => {
       method: method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: authToken,
+        Authorization: localStorage.getItem('authToken'),
       }
     };
 
@@ -41,21 +39,21 @@ const NoteState = (props) => {
       requestInfo.body = JSON.stringify(data);
     }
 
-    const response = await fetch(url, requestInfo);
+    const response = await fetch(host+url, requestInfo);
 
     const responseBody = await response.json();
 
     if (response.status >= 200 && response.status <= 300){
       return responseBody;
     } else {
-      console.log("Error");
+      console.alert("Error, check console");
       console.log(responseBody);
       return null;
     }
   };
 
   const deleteNote = async (id) => {
-    const isSuccess = await callApi("DELETE", `${host}/api/v1/notes/${id}`, null);
+    const isSuccess = await callApi("DELETE", `/api/v1/notes/${id}`, null);
 
     if (isSuccess !== null){
       const newNotes = notes.filter((note) => {
@@ -69,7 +67,7 @@ const NoteState = (props) => {
   const addNote = async (title, description) => {
     const responseBody = await callApi(
         "POST",
-        `${host}/api/v1/notes`,
+        `/api/v1/notes`,
         {title, description}
     );
 
@@ -81,7 +79,7 @@ const NoteState = (props) => {
   const listNotes = async () => {
     const responseBody = await callApi(
         "GET",
-        `${host}/api/v1/notes`,
+        `/api/v1/notes`,
         null
     );
 
@@ -91,7 +89,7 @@ const NoteState = (props) => {
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, editNote, deleteNote, addNote, listNotes }}
+      value={{ notes, setNotes, editNote, deleteNote, addNote, listNotes, callApi }}
     >
       {props.children}
     </NoteContext.Provider>
