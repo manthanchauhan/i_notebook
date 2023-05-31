@@ -1,10 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NoteContext from "../contexts/notes/NoteContext";
+import AlertContext from "../contexts/alert/AlertContext";
 
 const Login = () => {
   const context = useContext(NoteContext);
   const { callApi } = context;
+
+  const alertContext = useContext(AlertContext);
+  const {showAlert} = alertContext;
 
   const navigate = useNavigate();
 
@@ -22,6 +26,7 @@ const Login = () => {
       const authToken = responseJson.authToken;
       localStorage.setItem("authToken", authToken);
       navigate("/");
+      showAlert("Success", "Success");
     }
   };
 

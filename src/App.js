@@ -12,15 +12,17 @@ import NoteState from './contexts/notes/NoteState';
 import Alert from './components/Alert';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import AlertState from './contexts/alert/AlertState';
 
 
 function App() {
   return (
     <>
+    <AlertState>
     <NoteState>
     <BrowserRouter>
       <Navbar/>
-      <Alert message="This is iNotebook" type="primary"/>
+      <Alert/>
       <div className="container">
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -31,6 +33,7 @@ function App() {
       </div> 
     </BrowserRouter>
     </NoteState>
+    </AlertState>
     </>
   );
 }

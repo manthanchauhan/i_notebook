@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import {getTitleCase} from "../utils"
+import AlertContext from "../contexts/alert/AlertContext";
 
-const Alert = (props) => {
+const Alert = () => {
+  const context = useContext(AlertContext);
+  const {alert} = context;
+
   return (
-    <div className={`alert alert-${props.type}`} role="alert">
-      {props.message}
+    <div style={{height: '50px'}}>
+    {alert && <div>
+      <div className={`alert alert-${alert.type.toLowerCase()} alert-dismissible fade show`} role="alert">
+        <strong>{getTitleCase(alert.type)}</strong>: {alert.message}
+      </div>
+    </div>}
     </div>
   );
 };
