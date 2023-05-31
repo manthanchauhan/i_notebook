@@ -3,6 +3,8 @@ import { useContext } from "react";
 import NoteContext from "../contexts/notes/NoteContext";
 import NoteItem from "./NoteItem";
 import { useState } from "react";
+import { getAuthToken } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
   const context = useContext(NoteContext);
@@ -11,8 +13,14 @@ const Notes = () => {
   const ref = useRef(null);
   const refClose = useRef(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    listNotes();
+    if (getAuthToken() == null) {
+      navigate("/login");
+    } else {
+      listNotes();
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -20,22 +28,22 @@ const Notes = () => {
     setNote({
       etitle: currentNote.title,
       edescription: currentNote.description,
-      id: currentNote.id
+      id: currentNote.id,
     });
     ref.current.click();
   };
 
-  const emptyNote = {etitle: "", edescription: "", id: ""};
+  const emptyNote = { etitle: "", edescription: "", id: "" };
   const [note, setNote] = useState(emptyNote);
 
-  const onChange = (e)=>{
-      setNote({...note, [e.target.name]: e.target.value})
-  }
+  const onChange = (e) => {
+    setNote({ ...note, [e.target.name]: e.target.value });
+  };
 
-  const handleClick = ()=>{
+  const handleClick = () => {
     editNote(note.id, note.etitle, note.edescription);
     refClose.current.click();
-  }
+  };
 
   return (
     <>
@@ -108,7 +116,11 @@ const Notes = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={handleClick}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleClick}
+              >
                 Update note
               </button>
             </div>

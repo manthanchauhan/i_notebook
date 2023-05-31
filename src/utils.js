@@ -9,4 +9,8 @@ const getTitleCase = (text)=>{
     return wordList.join(" ");
 }
 
-export {getTitleCase};
+const getAuthToken = () => {
+    return localStorage.getItem('authToken');
+}
+
+export {getTitleCase, getAuthToken};
